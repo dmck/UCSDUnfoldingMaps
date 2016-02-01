@@ -37,7 +37,7 @@ public class HelloWorld extends PApplet
 	UnfoldingMap map2;
 
 	public void setup() {
-		size(850, 600, P2D);  // Set up the Applet window to be 850x600
+		size(800, 600, P2D);  // Set up the Applet window to be 800x600
 		                      // The OPENGL argument indicates to use the 
 		                      // Processing library's 2D drawing
 		                      // You'll learn more about processing in Module 3
@@ -78,7 +78,7 @@ public class HelloWorld extends PApplet
 		MapUtils.createDefaultEventDispatcher(this, map1);
 		
 		// Map2
-		map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider2);
+		map2 = new UnfoldingMap(this, 400, 50, 350, 500, provider2);
 
 		// The next line zooms in and centers the map at 
 	    // 32.9 (latitude) and -117.2 (longitude)
