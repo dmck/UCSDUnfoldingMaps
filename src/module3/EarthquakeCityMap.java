@@ -50,6 +50,8 @@ public class EarthquakeCityMap extends PApplet {
 	//feed with magnitude 2.5+ Earthquakes
 	private String earthquakesURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
 
+	// The MarkerManager
+	MarkerManager events = new MarkerManager();
 	
 	public void setup() {
 		size(950, 600, OPENGL);
@@ -86,7 +88,8 @@ public class EarthquakeCityMap extends PApplet {
 	    	// PointFeatures also have a getLocation method
 	    }
 		
-		MarkerManager book = new MarkerManager(markers);
+		events.addMarkers(markers);
+		map.addMarkerManager(events);
 
 	    // Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
