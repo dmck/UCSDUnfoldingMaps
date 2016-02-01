@@ -14,6 +14,7 @@ import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
+import de.fhpotsdam.unfolding.marker.MarkerManager;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.utils.MapUtils;
@@ -80,13 +81,13 @@ public class EarthquakeCityMap extends PApplet {
 	    	//System.out.println(f.getProperties());
 	    	//Get Magnitude
 	    	Object magObj = f.getProperty("magnitude");
-	    	//Get Location
-	    	Object location = f.getLocation();
-	    	System.out.println(location);
+	    	markers.add(createMarker(f));
 	    	float mag = Float.parseFloat(magObj.toString());
 	    	// PointFeatures also have a getLocation method
 	    }
 		
+		MarkerManager book = new MarkerManager(markers);
+
 	    // Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
 	    int yellow = color(255, 255, 0);
