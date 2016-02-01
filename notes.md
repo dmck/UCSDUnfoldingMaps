@@ -36,3 +36,10 @@ lima.latitude = -12.04;
 If the '=' operator opened lima (which we know contains a reference to the heap) and replaced that reference with '12.04', then the lima object in the heap would be lost. We'd have no way of finding it. That wouldn't be any good. So, Java is instead designed to follow the reference until it gets to the primitive resting place (for lack of a better word). As such, '=' opens lima, reads the reference, follows the reference and gets to lima.latitude in the heap where it finds '-12.0' (which isn't a reference) and it overwrites that to be '-12.04'.
 
 It may be helpful to think of the '=' operator as 'copy-and-paste' which can pick up one primitive and set it down somewhere else, and that somewhere else has to be an appropriate (primitive) box.
+
+## Scope
+*Member variables* are defined outside of a method which gives them a scope of the entire class. This makes them the broadest, because they can be accessed by any of the methods in the class. *Local variables* are variables that are declared inside a method and outside of any blocks therein (e.g. if statements). These are available anywhere within the method, but not in other methods of the same class. *Parameters / arguments* are essentially local variables which are created when passed into the method.
+
+A constructor is a method. The scope of a method's local variables exists entirely within the method's existance / operation. Since the constructor is run once to create each object, the parameters passed to it are created as local variables and exit until the method is complete. These are - naturally - different from the member variables of the object which the constructor creates (remember how we're using setters an getters).
+
+To access the member variables explicitly the constructor may call 'this.latitude' and in this way copy a value from the parameter to the object which it is creating. On Java, 'this' is not necessary. However it will first look within the method. So if you're using the same variable names in multiple places then you may have trouble or get confused if this stuff isn't kept track of.
