@@ -44,7 +44,7 @@ public class HelloWorld extends PApplet
 
 		// This sets the background color for the Applet.  
 		// Play around with these numbers and see what happens!
-		this.background(200, 200, 200);
+		this.background(154, 222, 214);
 		
 		// Select a map provider
 		AbstractMapProvider provider1 = new Google.GoogleTerrainProvider();
