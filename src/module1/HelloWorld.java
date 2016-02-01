@@ -46,14 +46,16 @@ public class HelloWorld extends PApplet
 		this.background(200, 200, 200);
 		
 		// Select a map provider
-		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
+		AbstractMapProvider provider1 = new Google.GoogleTerrainProvider();
+		AbstractMapProvider provider2 = new Google.GoogleTerrainProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 		
 		if (offline) {
 			// If you are working offline, you need to use this provider 
 			// to work with the maps that are local on your computer.  
-			provider = new MBTilesMapProvider(mbTilesString);
+			provider1 = new MBTilesMapProvider(mbTilesString);
+			provider2 = new MBTilesMapProvider(mbTilesString);
 			// 3 is the maximum zoom level for working offline
 			zoomLevel = 3;
 		}
@@ -65,7 +67,7 @@ public class HelloWorld extends PApplet
 		// The 6th argument specifies the map provider.  
 		// There are several providers built-in.
 		// Note if you are working offline you must use the MBTilesMapProvider
-		map1 = new UnfoldingMap(this, 50, 50, 350, 500, provider);
+		map1 = new UnfoldingMap(this, 50, 50, 350, 500, provider1);
 
 		// The next line zooms in and centers the map at 
 	    // 32.9 (latitude) and -117.2 (longitude)
@@ -75,7 +77,7 @@ public class HelloWorld extends PApplet
 		MapUtils.createDefaultEventDispatcher(this, map1);
 		
 		// Map2
-		map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider);
+		map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider2);
 
 		// The next line zooms in and centers the map at 
 	    // 32.9 (latitude) and -117.2 (longitude)
