@@ -77,12 +77,16 @@ public class EarthquakeCityMap extends PApplet {
 	    // in the features, and (2) how to get one property and use it
 		for (int i = 0; i < earthquakes.size(); i++) {
 	    	PointFeature f = earthquakes.get(i);
-	    	System.out.println(f.getProperties());
+	    	//System.out.println(f.getProperties());
+	    	//Get Magnitude
 	    	Object magObj = f.getProperty("magnitude");
+	    	//Get Location
+	    	Object location = f.getLocation();
+	    	System.out.println(location);
 	    	float mag = Float.parseFloat(magObj.toString());
 	    	// PointFeatures also have a getLocation method
 	    }
-	    
+		
 	    // Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
 	    int yellow = color(255, 255, 0);
