@@ -80,14 +80,16 @@ public class EarthquakeCityMap extends PApplet {
 	    // in the features, and (2) how to get one property and use it
 		for (int i = 0; i < earthquakes.size(); i++) {
 	    	PointFeature f = earthquakes.get(i);
-	    	//System.out.println(f.getProperties());
+	    	System.out.println(f.getProperties());
 	    	//Get Magnitude
 	    	Object magObj = f.getProperty("magnitude");
-	    	markers.add(createMarker(f));
+	    	//Add SimplePointMarkers to arraylist
 	    	float mag = Float.parseFloat(magObj.toString());
+	    	markers.add(createMarker(f,mag));
 	    	// PointFeatures also have a getLocation method
 	    }
 		
+		//Add arraylist to MarkerManager then to map
 		events.addMarkers(markers);
 		map.addMarkerManager(events);
 
@@ -101,14 +103,26 @@ public class EarthquakeCityMap extends PApplet {
 	// A suggested helper method that takes in an earthquake feature and 
 	// returns a SimplePointMarker for that earthquake
 	// TODO: Implement this method and call it from setUp, if it helps
-	private SimplePointMarker createMarker(PointFeature feature)
+	private SimplePointMarker createMarker(PointFeature feature, float magnitude)
 	{
+		
+		SimplePointMarker event = new SimplePointMarker(feature.getLocation());
+		event.setRadius(magnitude*magnitude);
+		
+		if(magnitude < THRESHOLD_LIGHT) {
+			event.setColor(color(0, 0, 255));
+		} else if(magnitude < THRESHOLD_MODERATE){
+			event.setColor(color(255, 255, 0));
+		} else {
+			event.setColor(color(255, 0, 0));
+		}
+		
 		// finish implementing and use this method, if it helps.
-		return new SimplePointMarker(feature.getLocation());
+		return event;
 	}
 	
 	public void draw() {
-	    background(10);
+		background(145,142,118);
 	    map.draw();
 	    addKey();
 	}
@@ -119,6 +133,25 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
-	
+		noStroke();
+		fill(222,216,171);
+		rect(50, 130, 150, 290);
+		String s = "Earthquake Key";
+		textSize(19);
+		fill(0,0,0);
+		text(s, 50, 150, 150, 150); 
+		textSize(16);
+		fill(255,0,0);
+		ellipse(120,200,30,30);
+		fill(0,0,0);
+		text("5.0+ Magnitude", 60, 220, 150, 150);
+		fill(255,255,0);
+		ellipse(120,270,15,15);
+		fill(0,0,0);
+		text("4.0+ Magnitude", 60, 290, 150, 150);
+		fill(0,0,255);
+		ellipse(120,340,7,7);
+		fill(0,0,0);
+		text("Below 4.0", 60, 360, 150, 150);
 	}
 }
