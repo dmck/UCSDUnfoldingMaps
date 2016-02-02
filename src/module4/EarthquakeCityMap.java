@@ -2,6 +2,7 @@ package module4;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.data.Feature;
@@ -188,15 +189,26 @@ public class EarthquakeCityMap extends PApplet {
 	// And LandQuakeMarkers have a "country" property set.
 	private void printQuakes(List<PointFeature> earthquakes) 
 	{
-		//Map<String, Integer> aMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> quakeCount = new HashMap<String, Integer>();
 	    for(PointFeature feature : earthquakes) {
 			for(Marker country: countryMarkers) {
 				if(isInCountry(feature, country)) {
-					System.out.println(feature.getProperty("country"));
+					
+					quakeCount.put((String)feature.getProperty("country"), 1);
+					
 				}
 			}
 	    }
+	    
+ 	   System.out.println("------------------------------------------------");
+ 	   System.out.println("Iterating or looping map using java5 foreach loop");
+	    for (String key : quakeCount.keySet()) {
+	    	   System.out.println("key: " + key + " value: " + quakeCount.get(key));
+	    	}
+
+	    
 	}
+	
 	
 	
 	
