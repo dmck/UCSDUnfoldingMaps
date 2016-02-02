@@ -1,5 +1,28 @@
 # Notes from the Coursera course: Object Oriented Programming in Java
 
+**Index**
+- Lesson 1
+  - Public v. Private
+  - Memory Models
+  - Scope
+- Lesson 2
+  - Assignment Notes
+- Lesson 3
+  - Inheritance
+    - UML Diagram
+    - Reference v. Object Type
+    - Visibility Modifiers
+    - Object Construction in Java
+       - Compiler Rules
+       - Variable Initialization
+       - Method Overriding
+  - Polymorphism
+    - Core Rules
+      - Compile Time Rules
+      - Runtine Rules
+    - Casting
+  - Abstract Classes: Implementation v. Interface
+
 ## Lesson 1
 
 ### Public v. Private
@@ -57,11 +80,6 @@ Reflections on assignment:
 > In both libraries, the developers have intentions of how the methods might be used and there's an internal logic between how the various methods and classes work together. Some of this information can be gleaned from the names. Other information is available my considering which classes have what. So - unlike my first pass at this assignment - before thinking about what needs to be done and trying to figure out how to do it with what I see, I've learned to focus on using this information to first determine exactly what the library is designed to enable others to do. If it's designed to do something, then there's probably an easy way to do it if you break down how the components work together.
 
 ## Lesson 3
-
-- Add Markers for Cities.
-- Determine if the earthquake occured on land and do something different.
-- Same for depth.
-- Same for recency.
 
 ### Inheritance
 
