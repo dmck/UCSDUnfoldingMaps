@@ -288,3 +288,46 @@ if( s instanceof Student ) {
     ...
 }
 ```
+### Abstract Classes: Implementation v. Interface
+Suppose we're now working in the accounting department, and we send statements to students and faculty. They may happen to be people, but what makes them a person isn't relevant to our billing/payments, etc.
+
+An abstract class allows us to 
+- Force subclasses to have 'monthyStatement()' method.
+- Stop creating actual objects of the Person type, because we're just printing statements, not adding new students or faculty to the university.
+- Keep being able to use Person references.
+- Retain common Person code.
+
+Abstract classes offer inheritance of both **implementation** (instance variables and methods) as well as **interface**.
+```
+public abstract class Person { ... }
+```
+This code creates a class which will not create objects of Person type. This is appropriate, because the accounting department doesn't need instances of people. However, this abstract class can be *inherited from*.
+
+In addition to inheriting from abstract classes, it is possible to force subclasses to override the methods in the abstract class. This may be done if you know each subclass will have to have/do something, but there is no common code between the different subclasses. This is forced by methods which say:
+```
+public abstract void monthlyStatement() {...}
+```
+***note:** if a class contains an abstract method, then the class must be abstract.*
+
+An interface does all the same, but does not enable the subclasses to inherit the common base-class code. Also, and interface only defines the required methods. If there is not base code that both will need, then an interface is probably approprite. One may be made by:
+```
+// Defined in java.jang.Comparable
+package java.lang;
+
+public interface Comparable<E> {
+    // Compare this object's name to o's name
+    // Return < 0, 0, > 0 if object so compares.
+    public abstract int compareTO( E o );
+}
+```
+```
+public class Person implements Comparable<Person> {
+    private String name;
+    ...
+    
+    @Override
+    public int compareTo (Person o ) {
+        return this.getName().compareTo( o.getName() );
+    }
+}
+```
