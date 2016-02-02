@@ -50,8 +50,46 @@ To access the member variables explicitly the constructor may call 'this.latitud
 
 Reflections on assignment:
 
-> This assignment was to use the unfoldingmaps and processing libraries. In hind sight, I should have immediately realized that unfoldingmaps was going to make it easy to put custom pointers on the map; That's what it's designed for. However, the two libraries have vastly different documentations. Unfoldingmaps seems to be automatically generated docs, whereas processing has been written by the human hand. 
+> This assignment was to use the unfoldingmaps and processing libraries to add earthquake markers to a map with different styles and the a map key. In hind sight, I should have immediately realized that unfoldingmaps was going to make it easy to put custom pointers on the map; That's what it's designed for. However, the two libraries have vastly different documentations. Unfoldingmaps seems to be automatically generated docs, whereas processing has been written by the human hand. 
 
 > I preferred processing's docs, because they seemed to know what the reader was looking for, while Unfoldingmaps didn't it just threw out all the information with no emphasis on what most users probably use most of the time. This made it harder to find the right methods, but it's a useful experience.
 
 > In both libraries, the developers have intentions of how the methods might be used and there's an internal logic between how the various methods and classes work together. Some of this information can be gleaned from the names. Other information is available my considering which classes have what. So - unlike my first pass at this assignment - before thinking about what needs to be done and trying to figure out how to do it with what I see, I've learned to focus on using this information to first determine exactly what the library is designed to enable others to do. If it's designed to do something, then there's probably an easy way to do it if you break down how the components work together.
+
+## Lesson 3
+
+- Add Markers for Cities.
+- Determine if the earthquake occured on land and do something different.
+- Same for depth.
+- Same for recency.
+
+### Inheritance
+
+Objects have similarities and differences. To the extent that they are similar, inheritance makes it possible to avoid having multiple copies of code that does the same thing. Having the same code twice is bad because then you have to keep track of the two and so forth. While inheritance deals with what is the same, the children add the differences.
+
+Inheritance is done by:
+```
+public class Person {
+	private String name;
+	...
+}
+public class Student extends Person {
+	...
+}
+```
+In this case Person is what's known as a 'base class' or a 'superclass'. Student is known as 'derived class' or 'subclass'.
+
+Student inherits 1) the public instance variables (i.e. member variables), the public methods, and the private instance variables. So don't include 'private Strong name;' in the Student class because it's already there. That would be a 'hidden variable' and is bad if only because it'd be confusing as the day is long. 
+
+#### UML Diagram
+UML stands for Unified Modeling Language.
+```
+__________________
+     Person
+__________________
+String name
+------------------
+String getName()
+```
+
+Use arrows to indicate inheritance between the classes. So, when drawing the subclasses, it is not necessary to specify 'String name' or 'getName()', because those have been inherited and are covered by inclusion of the arrow.
