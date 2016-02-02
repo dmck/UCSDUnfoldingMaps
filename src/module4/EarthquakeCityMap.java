@@ -116,7 +116,7 @@ public class EarthquakeCityMap extends PApplet {
 
 		System.out.println(lands+" on land. On ocean: "+oceans);
 	    // could be used for debugging
-	    printQuakes();
+	    printQuakes(earthquakes);
 	 		
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
@@ -186,8 +186,16 @@ public class EarthquakeCityMap extends PApplet {
 	// the quakes to count how many occurred in that country.
 	// Recall that the country markers have a "name" property, 
 	// And LandQuakeMarkers have a "country" property set.
-	private void printQuakes() 
+	private void printQuakes(List<PointFeature> earthquakes) 
 	{
+		//Map<String, Integer> aMap = new HashMap<String, Integer>();
+	    for(PointFeature feature : earthquakes) {
+			for(Marker country: countryMarkers) {
+				if(isInCountry(feature, country)) {
+					System.out.println(feature.getProperty("country"));
+				}
+			}
+	    }
 	}
 	
 	
