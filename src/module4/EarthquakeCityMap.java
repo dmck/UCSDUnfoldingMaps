@@ -99,17 +99,22 @@ public class EarthquakeCityMap extends PApplet {
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    quakeMarkers = new ArrayList<Marker>();
 	    
+	    int lands = 0;
+	    int oceans = 0;
 	    for(PointFeature feature : earthquakes) {
 		  //check if LandQuake
 		  if(isLand(feature)) {
 		    quakeMarkers.add(new LandQuakeMarker(feature));
+		    lands++;
 		  }
 		  // OceanQuakes
 		  else {
 		    quakeMarkers.add(new OceanQuakeMarker(feature));
+		    oceans++;
 		  }
 	    }
 
+		System.out.println(lands+" on land. On ocean: "+oceans);
 	    // could be used for debugging
 	    printQuakes();
 	 		
@@ -165,10 +170,10 @@ public class EarthquakeCityMap extends PApplet {
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
 		
 		// TODO: Implement this method using the helper method isInCountry
-		int x = 0;
 		for(Marker country: countryMarkers) {
-			x++;
-			System.out.println(x);
+			if(isInCountry(earthquake, country)) {
+				return true;
+			}
 		}
 		
 		// not inside any country
@@ -183,7 +188,6 @@ public class EarthquakeCityMap extends PApplet {
 	// And LandQuakeMarkers have a "country" property set.
 	private void printQuakes() 
 	{
-		// TODO: Implement this method
 	}
 	
 	
