@@ -77,7 +77,7 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
+		earthquakesURL = "test1.atom";
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
@@ -100,22 +100,17 @@ public class EarthquakeCityMap extends PApplet {
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    quakeMarkers = new ArrayList<Marker>();
 	    
-	    int lands = 0;
-	    int oceans = 0;
 	    for(PointFeature feature : earthquakes) {
 		  //check if LandQuake
 		  if(isLand(feature)) {
 		    quakeMarkers.add(new LandQuakeMarker(feature));
-		    lands++;
 		  }
 		  // OceanQuakes
 		  else {
 		    quakeMarkers.add(new OceanQuakeMarker(feature));
-		    oceans++;
 		  }
 	    }
 
-		System.out.println(lands+" on land. On ocean: "+oceans);
 	    // could be used for debugging
 	    printQuakes(earthquakes);
 	 		
@@ -189,11 +184,12 @@ public class EarthquakeCityMap extends PApplet {
 	// And LandQuakeMarkers have a "country" property set.
 	private void printQuakes(List<PointFeature> earthquakes) 
 	{
+	    int quakes = 0;
+		int lands = 0;
 		HashMap<String, Integer> quakeCount = new HashMap<String, Integer>();
 	    for(PointFeature feature : earthquakes) {
 			for(Marker country: countryMarkers) {
 				if(isInCountry(feature, country)) {
-					
 					String countryName = (String)feature.getProperty("country");
 					int count = quakeCount.containsKey(countryName) ? quakeCount.get(countryName) : 0;
 					if(count == 0) {
@@ -201,19 +197,19 @@ public class EarthquakeCityMap extends PApplet {
 					} else {
 						quakeCount.put(countryName, count +1);
 					}
-					
-					//quakeCount.put(countryName, 1);
-					
-				}
+				    lands++;
+				} 
 			}
+			quakes++;
 	    }
+	    int oceans = quakes - lands;
 	    
  	   System.out.println("------------------------------------------------");
  	   System.out.println("Iterating or looping map using java5 foreach loop");
-	    for (String key : quakeCount.keySet()) {
-	    	   System.out.println("key: " + key + " value: " + quakeCount.get(key));
-	    	}
-
+	   for (String key : quakeCount.keySet()) {
+		   System.out.println("key: " + key + " value: " + quakeCount.get(key));
+	   }
+	   System.out.println("OCEAN QUAKES: " + oceans);
 	    
 	}
 	
