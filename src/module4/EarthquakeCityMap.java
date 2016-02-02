@@ -20,7 +20,7 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Daniel McKnight
  * Date: July 17, 2015
  * */
 public class EarthquakeCityMap extends PApplet {
@@ -165,6 +165,11 @@ public class EarthquakeCityMap extends PApplet {
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
 		
 		// TODO: Implement this method using the helper method isInCountry
+		int x = 0;
+		for(Marker country: countryMarkers) {
+			x++;
+			System.out.println(x);
+		}
 		
 		// not inside any country
 		return false;
