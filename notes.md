@@ -93,3 +93,198 @@ String getName()
 ```
 
 Use arrows to indicate inheritance between the classes. So, when drawing the subclasses, it is not necessary to specify 'String name' or 'getName()', because those have been inherited and are covered by inclusion of the arrow.
+
+#### Reference v. Object Type
+Naturally, you can't pass a string to an int. The same can occur - or at least something very similar - with objects.
+
+Example:
+```
+Person p = new Person();
+Student s = new Student();
+```
+That's fine. Makes perfect sense.
+```
+Person p = new Student();
+```
+This is also allowed. This exemplifies the 'is a' relationship. A Person-array may contain Students because each Serson 'is a' Person.
+```
+Student s = new Person();
+```
+*NO!* This may not be immediately intuitive. Of course that's how it works in the real world, but programming languges aren't always intuitive. However, that's where you'd be wrong. Object oriented programming languages (or at least Java) is designed to mirror the real world. It works the way you would think it should work. It may be that you can't pass a String to an Int, but you can pass an Into to a Double, because Strings are broader and contain extra information, but Ints are narrower and can fit into a Double... but referencing primitives and referencing objects are different. Just believe that it works in the code the what you would want it to work. They both makes sense.
+
+#### Visibility Modifiers
+- Private: Accessible from:
+- - *same class*
+- Package: Accessible from:
+- - same class
+- - *same package*
+- Protected: Accessible from:
+- - same class
+- - same package
+- - *any subclass*
+- Public: Accessiblility is *wide open.*
+
+Protected is weird. It makes sense that a subclass would need access to it's parent's variables, etc., but why should another class in the same package have access? Package access is wierder, because that still gives access to other classes in the package, but lacks the utility of giving access to the subclasses. In general, stick to *private* and *public*.
+
+#### Object Construction in Java
+All objects inherit from the object class and are constructed 'from the inside out.'
+```
+Student s = new Student();
+```
+Java goes Student() -> Person() -> Object(), then initializeses the Object variables. Once that's done, it steps back out and adds on the different variables that Person() adds, and then onto the different variables that Student() adds. So, it sensibly starts with what's inherited in the order that it's inherited.
+
+##### Compiler Rules
+On one of the passes, the compiler adds/changes the code.
+
+1. It adds a superclass 'extends Object'.
+2. If it doesn't have a constructor, then a default constructor is added.
+3.  The first line of a class must be either 'this(...)' or 'super(...)', otherwise Java will insert 'super();' so that it can breadcrumb it's way up to the Object() class and work its way back out.
+
+##### Variable Initialization
+Consider the following:
+```
+public class Person extends Object {
+    private String name;
+    public Person(String n) {
+        super();
+        this.name = n;
+    }
+}
+public class Student extends Person {
+    public Student (String n) {
+        // Note that you can't do this:
+        // super();
+        // this.name = n;
+        // Because name is Private. Instead:
+        super(n);
+    }
+    public Student () {
+        // When you haven't been passed an argument
+        // such as 'name' you could do the following:
+        // super ( "Default Name" );
+        // However, you might as well make use of
+        // the Student(n) constructor that is in
+        // this class, that way you can keep everything
+        // tight and put code in there that will run
+        // in both instances.
+        this( "Default Name" );
+    }
+}
+```
+##### Method Overriding
+Overriding is not the same as overloading.
+- Overloading is when a method is in the *same class* with the same name, but different parameters.
+- Overriding is when a method is in a *sub*class and has the same name and the *same* parameters. It *over-rides* the method in the parent class - as the name would suggest.
+
+What does overriding allow us to do? Well consider there is a method in a class. It does something. By putting a method with the same name and same parameters in a subclass, we can call the same each the same way. However, we can have the subclass behave differently (because we over-rode that method).
+
+For example, recall:
+```
+__________________
+     Person
+__________________
+String name
+------------------
+String getName()
+String toString()
+```
+and consider
+```
+Person p = new Person("Tim");
+// note System.out.println() automatically calls
+// .toString when passed an object. So:
+// System.out.printn(p.toString());
+// is the same as:
+System.out.println( p );
+```
+We have a Person object which has a toString() method and will output the name and soforth of that object. However, Person has a subclass of Student, which has other additional variables and Student also needs a .toString().
+
+To give a subclass a .toString() (and presumably the same can be done in other contexts):
+
+```
+public class Student extends Person {
+    public int getSID() {
+        return studentID;
+    }
+    public String toString() {
+        return  this.getSID() + ": " +
+                super.toString();
+    }
+    // Look we used 'this' and 'super'!
+}
+```
+
+### Polymorphism
+We've already done it. Person got poly-morphy being passed a sublcass which is different(morphed) in one way (poly). See:
+```
+Person s = new Student('Cara', 1234);
+```
+So this allows us to:
+```
+Person p[] new person[3];
+p[0] = new Person('Tim');
+p[1] = new Person('Cara', 1234);
+p[2] = new Person('Mia', 'abcd');
+```
+#### Core Rules
+There are 'compile-time' rules and 'runtime-rules'.
+##### Compile Time Rules
+The compiler only knows the reference type. For example:
+```
+Person s = new Student('Cara', 1234);
+System.out.println(s);
+// Remember this will call s.toString();
+```
+When the compiler sees this, it only knows that 's' is a Person and that it is looking to run a toString(). Since Person has a toString(), it compiles - but *which* toString() isn't determined until runtime where the override is encountered.
+##### Runtime Rules
+At runtime, Java sees that it's a Student and that instead of Person.toString() it will do Student.toString().
+##### Example
+```
+__________________
+     Person
+__________________
+String name
+------------------
+String getName()
+String toString()
+```
+```
+__________________
+     Student
+__________________
+int studentID
+------------------
+int getSID()
+String toString()
+```
+```
+Person s = new Student('Cara', 1234);
+System.out.println(s);
+// Remember this will call s.toString();
+```
+This code runs perfectly as discussed above, but what about:
+```
+Person s = new Student('Cara', 1234);
+System.out.println( s.getSID() );
+```
+This won't work, because at comple-time, the compiler only knows that it is calling 'getSID()' on the Person class. The compiler does not see a getSID(), because that's not in all Persons only the subclass Student. So we get a compile-time error.
+#### Casting
+Casting fixes the above problem.
+```
+Person s = new Student('Cara', 1234);
+System.out.println( ( (Student)s ).getSID() );
+```
+This 'casts' the variable 's' as a Student, instructing the compiler just go with it. It won't find a .getSID in the Person class, and it can't see into Student to check if the subclass has such a method. So it's just going to do it live and hope the runtime can find what you're claiming is there.
+
+So don't be wrong. Imagine that instead of 'new Student...' you do 'new Person' or *in an array of mixed Students and Persons, the following occurs:
+```
+Person s = new Person('Tim');
+System.out.println( ( (Student)s ).getSID() );
+```
+Runtime error! To prevent this error do the following:
+```
+if( s instanceof Student ) {
+    // only executes of 's' is-a Student at runtime
+    ...
+}
+```
