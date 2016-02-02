@@ -194,7 +194,15 @@ public class EarthquakeCityMap extends PApplet {
 			for(Marker country: countryMarkers) {
 				if(isInCountry(feature, country)) {
 					
-					quakeCount.put((String)feature.getProperty("country"), 1);
+					String countryName = (String)feature.getProperty("country");
+					int count = quakeCount.containsKey(countryName) ? quakeCount.get(countryName) : 0;
+					if(count == 0) {
+						quakeCount.put(countryName, 1);
+					} else {
+						quakeCount.put(countryName, count +1);
+					}
+					
+					//quakeCount.put(countryName, 1);
 					
 				}
 			}
