@@ -47,3 +47,11 @@ A constructor is a method. The scope of a method's local variables exists entire
 To access the member variables explicitly the constructor may call 'this.latitude' and in this way copy a value from the parameter to the object which it is creating. On Java, 'this' is not necessary. However it will first look within the method. So if you're using the same variable names in multiple places then you may have trouble or get confused if this stuff isn't kept track of.
 
 ## Lesson 2
+
+Reflections on assignment:
+
+> This assignment was to use the unfoldingmaps and processing libraries. In hind sight, I should have immediately realized that unfoldingmaps was going to make it easy to put custom pointers on the map; That's what it's designed for. However, the two libraries have vastly different documentations. Unfoldingmaps seems to be automatically generated docs, whereas processing has been written by the human hand. 
+
+> I preferred processing's docs, because they seemed to know what the reader was looking for, while Unfoldingmaps didn't it just threw out all the information with no emphasis on what most users probably use most of the time. This made it harder to find the right methods, but it's a useful experience.
+
+> In both libraries, the developers have intentions of how the methods might be used and there's an internal logic between how the various methods and classes work together. Some of this information can be gleaned from the names. Other information is available my considering which classes have what. So - unlike my first pass at this assignment - before thinking about what needs to be done and trying to figure out how to do it with what I see, I've learned to focus on using this information to first determine exactly what the library is designed to enable others to do. If it's designed to do something, then there's probably an easy way to do it if you break down how the components work together.
