@@ -166,12 +166,24 @@ public class EarthquakeCityMap extends PApplet {
 		// Size Key
 		fill(0, 0, 0);
 		text("Size", 50-10, 175);
+		// Shallow Key
+		fill(255,255,0);
+		ellipse(50, 200, 10, 10);
+		// Intermediate Key
+		fill(0,0,255);
+		ellipse(50, 225, 10, 10);
+		// Deep Key
+		fill(255,0,0);
+		ellipse(50, 250, 10, 10);
 		
 		fill(0, 0, 0);
 		text("City Marker", 75, 100);
 		text("Land Quake", 75, 125);
 		text("Ocean Quake", 75, 150);
 		text("~ Magnitude", 75, 175);
+		text("Shallow", 75, 200);
+		text("Intermediate", 75, 225);
+		text("Deep", 75, 250);
 	}
 
 	
