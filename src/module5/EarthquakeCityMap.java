@@ -137,6 +137,7 @@ public class EarthquakeCityMap extends PApplet {
 		}
 		selectMarkerIfHover(quakeMarkers);
 		selectMarkerIfHover(cityMarkers);
+		System.out.println(lastSelected);
 	}
 	
 	// If there is a marker under the cursor, and lastSelected is null 
@@ -149,7 +150,8 @@ public class EarthquakeCityMap extends PApplet {
 			Location markerLocation = marker.getLocation();
 			// checking if inside
 			if(marker.isInside(map, mouseX, mouseY)) {
-				System.out.println("Mouse is inside a marker!");
+				lastSelected = (CommonMarker) marker;
+				System.out.println(lastSelected);
 			}
 		}
 	}
