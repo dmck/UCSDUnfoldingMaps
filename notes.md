@@ -1,13 +1,13 @@
 # Notes from the Coursera course: Object Oriented Programming in Java
 
 **Index**
-- Lesson 1
+- Week 1
   - Public v. Private
   - Memory Models
   - Scope
-- Lesson 2
+- Week 2
   - Assignment Notes
-- Lesson 3
+- Week 3
   - Inheritance
     - UML Diagram
     - Reference v. Object Type
@@ -22,8 +22,10 @@
       - Runtine Rules
     - Casting
   - Abstract Classes: Implementation v. Interface
+- Week 4
+  - Event-Driven Programming
 
-## Lesson 1
+## Week 1
 
 ### Public v. Private
 ```
@@ -69,7 +71,7 @@ A constructor is a method. The scope of a method's local variables exists entire
 
 To access the member variables explicitly the constructor may call 'this.latitude' and in this way copy a value from the parameter to the object which it is creating. On Java, 'this' is not necessary. However it will first look within the method. So if you're using the same variable names in multiple places then you may have trouble or get confused if this stuff isn't kept track of.
 
-## Lesson 2
+## Week 2
 
 Reflections on assignment:
 
@@ -79,7 +81,7 @@ Reflections on assignment:
 
 > In both libraries, the developers have intentions of how the methods might be used and there's an internal logic between how the various methods and classes work together. Some of this information can be gleaned from the names. Other information is available my considering which classes have what. So - unlike my first pass at this assignment - before thinking about what needs to be done and trying to figure out how to do it with what I see, I've learned to focus on using this information to first determine exactly what the library is designed to enable others to do. If it's designed to do something, then there's probably an easy way to do it if you break down how the components work together.
 
-## Lesson 3
+## Week 3
 
 ### Inheritance
 
@@ -349,3 +351,46 @@ public class Person implements Comparable<Person> {
     }
 }
 ```
+## Week 4
+
+### Event-Driven Programming
+
+UnfoldingMaps offers a default event listner which will call various methods when triggered:
+```
+MapUtils.createDefaultEventDispatcher(this, map);
+```
+Among other things, this will call the following methods as appropriate (see UML below).
+
+The variables 'mouseX' and 'mouseY' will reflect the location of the mouse at the time of the mouse event, because they are inherited from PApplet.
+
+***Note** A button (as they're being made here) is not a button until an event-listener determines that the click occurred in the shape. Until then, it's just a shape. Apparently, there is no "isClicked" automatically available.*
+
+### Listener Hierarchy
+
+```
+__________________
+  <<interface>>
+  MouseListener
+__________________
+...
+------------------
+mousePressed()
+mouseClicked()
+mouseReleased()
+...
+```
+```
+__________________
+  <<interface>>
+   KeyListener
+__________________
+...
+------------------
+keyPressed()
+keyTyped()
+keyReleased()
+...
+```
+PApplet() implements both the MouseListener and KeyListener interfaces, which means that it implements and thus overrides the methods of the interface. In turn PApplet(), can be extended by MapWithButton() which adds other functions.
+
+...
