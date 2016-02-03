@@ -149,6 +149,7 @@ public class EarthquakeCityMap extends PApplet {
 			Location markerLocation = marker.getLocation();
 			// checking if inside
 			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastSelected != null) {lastSelected.setSelected(false);}
 				lastSelected = (CommonMarker) marker;
 				marker.setSelected(true);
 			}
