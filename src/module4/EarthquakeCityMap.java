@@ -152,19 +152,22 @@ public class EarthquakeCityMap extends PApplet {
 		float leftX = x-scale;
 		float leftY = y+scale;
 		
+		// City Marker Key
 		noStroke();
 		fill(color(100,100,100));
 		triangle(topX, topY, rightX, rightY, leftX, leftY);
+		// Land Quake Key
 		stroke(0,0,0);
 		fill(color(255, 255, 255));
 		ellipse(50, 125, 10, 10);
-		//fill(color(0, 0, 255));
-		//ellipse(50, 225, 5, 5);
+		// Ocean Quake Key
+		fill(2550, 255, 255);
+		rect(50-5, 150-5, 10, 10);
 		
 		fill(0, 0, 0);
 		text("City Marker", 75, 100);
 		text("Land Quake", 75, 125);
-		//text("Below 4.0", 75, 225);
+		text("Ocean Quake", 75, 150);
 	}
 
 	
