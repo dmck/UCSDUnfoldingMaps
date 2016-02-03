@@ -20,7 +20,7 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Daniel McKnight
  * Date: July 17, 2015
  * */
 public class EarthquakeCityMap extends PApplet {
@@ -105,7 +105,7 @@ public class EarthquakeCityMap extends PApplet {
 	    }
 
 	    // could be used for debugging
-	    printQuakes();
+	    //printQuakes();
 	 		
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
@@ -145,8 +145,15 @@ public class EarthquakeCityMap extends PApplet {
 	// 
 	private void selectMarkerIfHover(List<Marker> markers)
 	{
-		// TODO: Implement this method
+		for(Marker marker : markers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				System.out.println("Mouse is inside a marker!");
+			}
+		}
 	}
+	
 	
 	/** The event handler for mouse clicks
 	 * It will display an earthquake and its threat circle of cities
