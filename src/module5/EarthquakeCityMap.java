@@ -168,8 +168,56 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// Hint: You probably want a helper method or two to keep this code
 		// from getting too long/disorganized
+		
+		if (lastClicked != null) {
+			lastClicked.setClicked(false);
+			lastClicked = null;
+		}
+		
+		// click occurred
+		boolean cityClicked = clickCity();
+		boolean quakeClicked = clickQuake();
+		// if it did then clicked = true
+		// hide all markers that aren't clicked.
+		// if clicked marker is a city then
+		//		for each quake show if its circle, else hide
+		//		for each city not clicked, hide.
+		// if clicked marker is a quake then
+		//		for each city show if the circle, else hide
+		//		for each quake not clicked, hide.
 	}
 	
+	private boolean clickCity()
+	{
+		for(Marker marker : cityMarkers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastClicked != null) {lastClicked.setClicked(false);}
+				lastClicked = (CityMarker) marker;
+				lastClicked.setClicked(true);
+				System.out.println(lastClicked);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean clickQuake()
+	{
+		for(Marker marker : quakeMarkers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastClicked != null) {lastClicked.setClicked(false);}
+				lastClicked = (EarthquakeMarker) marker;
+				lastClicked.setClicked(true);
+				System.out.println(lastClicked);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	// loop over and unhide all markers
 	private void unhideMarkers() {
