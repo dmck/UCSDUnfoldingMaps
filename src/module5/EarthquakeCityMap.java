@@ -216,6 +216,15 @@ public class EarthquakeCityMap extends PApplet {
 		for(Marker marker : quakeMarkers) {		
 			if(marker != lastClicked) {marker.setHidden(true);}
 		}
+		double distance = 0;
+		for(Marker marker : cityMarkers) {
+			distance = marker.getDistanceTo(lastClicked.getLocation());
+			EarthquakeMarker quake = (EarthquakeMarker) lastClicked;
+			double threatCircle = quake.threatCircle();
+			if(distance > threatCircle) {
+				marker.setHidden(true);
+			} else { marker.setHidden(false);}
+		}
 	}
 	
 	private boolean clickCity()
