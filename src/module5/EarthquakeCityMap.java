@@ -174,10 +174,18 @@ public class EarthquakeCityMap extends PApplet {
 			lastClicked = null;
 		}
 		
-		// click occurred
 		boolean cityClicked = clickCity();
-		boolean quakeClicked = clickQuake();
-		// if it did then clicked = true
+		boolean quakeClicked = false;
+		if (cityClicked == false) {
+			quakeClicked = clickQuake();
+		}
+		
+		if(cityClicked) {
+			cityCentric();
+		} else if(quakeClicked) {
+			quakeCentric();
+		} else {unhideMarkers();}
+		
 		// hide all markers that aren't clicked.
 		// if clicked marker is a city then
 		//		for each quake show if its circle, else hide
@@ -185,6 +193,20 @@ public class EarthquakeCityMap extends PApplet {
 		// if clicked marker is a quake then
 		//		for each city show if the circle, else hide
 		//		for each quake not clicked, hide.
+		cityClicked = false;
+		quakeClicked = false;
+	}
+	
+	private void cityCentric() {
+		for(Marker marker : cityMarkers) {		
+			if(marker != lastClicked) {marker.setHidden(true);}
+		}
+	}
+	
+	private void quakeCentric() {
+		for(Marker marker : quakeMarkers) {		
+			if(marker != lastClicked) {marker.setHidden(true);}
+		}
 	}
 	
 	private boolean clickCity()
@@ -194,7 +216,7 @@ public class EarthquakeCityMap extends PApplet {
 			// checking if inside
 			if(marker.isInside(map, mouseX, mouseY)) {
 				if (lastClicked != null) {lastClicked.setClicked(false);}
-				lastClicked = (CityMarker) marker;
+				lastClicked = (CommonMarker) marker;
 				lastClicked.setClicked(true);
 				System.out.println(lastClicked);
 				return true;
@@ -210,7 +232,7 @@ public class EarthquakeCityMap extends PApplet {
 			// checking if inside
 			if(marker.isInside(map, mouseX, mouseY)) {
 				if (lastClicked != null) {lastClicked.setClicked(false);}
-				lastClicked = (EarthquakeMarker) marker;
+				lastClicked = (CommonMarker) marker;
 				lastClicked.setClicked(true);
 				System.out.println(lastClicked);
 				return true;
