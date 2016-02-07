@@ -77,11 +77,11 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		earthquakesURL = "test1.atom";
+		//earthquakesURL = "test1.atom";
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
-		//earthquakesURL = "quiz1.atom";
+		earthquakesURL = "quiz1.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -142,17 +142,48 @@ public class EarthquakeCityMap extends PApplet {
 		textSize(12);
 		text("Earthquake Key", 50, 75);
 		
-		fill(color(255, 0, 0));
-		ellipse(50, 125, 15, 15);
-		fill(color(255, 255, 0));
-		ellipse(50, 175, 10, 10);
-		fill(color(0, 0, 255));
-		ellipse(50, 225, 5, 5);
+		float x = 50;
+		float y = 100;
+		float scale = 7;
+		float topX = x;
+		float topY = y-scale;
+		float rightX = x+scale;
+		float rightY = y+scale;
+		float leftX = x-scale;
+		float leftY = y+scale;
+		
+		// City Marker Key
+		noStroke();
+		fill(color(100,100,100));
+		triangle(topX, topY, rightX, rightY, leftX, leftY);
+		// Land Quake Key
+		stroke(0,0,0);
+		fill(color(255, 255, 255));
+		ellipse(50, 125, 10, 10);
+		// Ocean Quake Key
+		fill(2550, 255, 255);
+		rect(50-5, 150-5, 10, 10);
+		// Size Key
+		fill(0, 0, 0);
+		text("Size", 50-10, 175);
+		// Shallow Key
+		fill(255,255,0);
+		ellipse(50, 200, 10, 10);
+		// Intermediate Key
+		fill(0,0,255);
+		ellipse(50, 225, 10, 10);
+		// Deep Key
+		fill(255,0,0);
+		ellipse(50, 250, 10, 10);
 		
 		fill(0, 0, 0);
-		text("5.0+ Magnitude", 75, 125);
-		text("4.0+ Magnitude", 75, 175);
-		text("Below 4.0", 75, 225);
+		text("City Marker", 75, 100);
+		text("Land Quake", 75, 125);
+		text("Ocean Quake", 75, 150);
+		text("~ Magnitude", 75, 175);
+		text("Shallow", 75, 200);
+		text("Intermediate", 75, 225);
+		text("Deep", 75, 250);
 	}
 
 	

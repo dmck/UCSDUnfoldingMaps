@@ -20,8 +20,8 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
- * Date: July 17, 2015
+ * @author Daniel McKnight
+ * Date: February 2, 2016
  * */
 public class EarthquakeCityMap extends PApplet {
 	
@@ -105,7 +105,7 @@ public class EarthquakeCityMap extends PApplet {
 	    }
 
 	    // could be used for debugging
-	    printQuakes();
+	    //printQuakes();
 	 		
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
@@ -145,8 +145,17 @@ public class EarthquakeCityMap extends PApplet {
 	// 
 	private void selectMarkerIfHover(List<Marker> markers)
 	{
-		// TODO: Implement this method
+		for(Marker marker : markers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastSelected != null) {lastSelected.setSelected(false);}
+				lastSelected = (CommonMarker) marker;
+				marker.setSelected(true);
+			}
+		}
 	}
+	
 	
 	/** The event handler for mouse clicks
 	 * It will display an earthquake and its threat circle of cities
@@ -159,8 +168,96 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// Hint: You probably want a helper method or two to keep this code
 		// from getting too long/disorganized
+		
+		if (lastClicked != null) {
+			lastClicked.setClicked(false);
+			lastClicked = null;
+		}
+		
+		boolean cityClicked = clickCity();
+		boolean quakeClicked = false;
+		if (cityClicked == false) {
+			quakeClicked = clickQuake();
+		}
+		
+		if(cityClicked) {
+			cityCentric();
+		} else if(quakeClicked) {
+			quakeCentric();
+		} else {unhideMarkers();}
+		
+		// hide all markers that aren't clicked.
+		// if clicked marker is a city then
+		//		for each quake show if its circle, else hide
+		//		for each city not clicked, hide.
+		// if clicked marker is a quake then
+		//		for each city show if the circle, else hide
+		//		for each quake not clicked, hide.
+		cityClicked = false;
+		quakeClicked = false;
 	}
 	
+	private void cityCentric() {
+		for(Marker marker : cityMarkers) {		
+			if(marker != lastClicked) {marker.setHidden(true);}
+		}
+		double distance = 0;
+		for(Marker marker : quakeMarkers) {
+			distance = marker.getDistanceTo(lastClicked.getLocation());
+			EarthquakeMarker quake = (EarthquakeMarker) marker;
+			double threatCircle = quake.threatCircle();
+			if(distance > threatCircle) {
+				marker.setHidden(true);
+			} else { marker.setHidden(false);}
+		}
+	}
+	
+	private void quakeCentric() {
+		for(Marker marker : quakeMarkers) {		
+			if(marker != lastClicked) {marker.setHidden(true);}
+		}
+		double distance = 0;
+		for(Marker marker : cityMarkers) {
+			distance = marker.getDistanceTo(lastClicked.getLocation());
+			EarthquakeMarker quake = (EarthquakeMarker) lastClicked;
+			double threatCircle = quake.threatCircle();
+			if(distance > threatCircle) {
+				marker.setHidden(true);
+			} else { marker.setHidden(false);}
+		}
+	}
+	
+	private boolean clickCity()
+	{
+		for(Marker marker : cityMarkers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastClicked != null) {lastClicked.setClicked(false);}
+				lastClicked = (CommonMarker) marker;
+				lastClicked.setClicked(true);
+				System.out.println(lastClicked);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean clickQuake()
+	{
+		for(Marker marker : quakeMarkers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				if (lastClicked != null) {lastClicked.setClicked(false);}
+				lastClicked = (CommonMarker) marker;
+				lastClicked.setClicked(true);
+				System.out.println(lastClicked);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	// loop over and unhide all markers
 	private void unhideMarkers() {
