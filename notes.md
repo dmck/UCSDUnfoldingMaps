@@ -24,6 +24,11 @@
   - Abstract Classes: Implementation v. Interface
 - Week 4
   - Event-Driven Programming
+- Week 5
+  - Searching
+    - Linear Search
+    - Binary Search
+  - Basic Sorting
 
 ## Week 1
 
@@ -393,4 +398,36 @@ keyReleased()
 ```
 PApplet() implements both the MouseListener and KeyListener interfaces, which means that it implements and thus overrides the methods of the interface. In turn PApplet(), can be extended by MapWithButton() which adds other functions.
 
-...
+## Week 5
+
+### Searching
+
+#### Linear Search
+Steps through each item in array and checks if the item is what we're looking for. This can be done even if the data isn't sorted. Efficiency depends on where (and whether) the item is in the array.
+
+#### Binary Search
+This search starts in the middle and adjusts the range to eliminate the bad 50%. The data has to be sorted. Psuedocode:
+
+```
+//Binary Search
+initialize low=0; high = size - 1
+while low <= high
+    // mid = (high+lo)w /2 may cause overflow, so:
+    mid = ((high-low)/2)
+    if this is what we're looking for return
+    if what we're looking for is less then
+        high = mid -1
+    else low = mid +1
+return not found.
+```
+So to compare efficiency:
+
+|  |  |  |  |  |  |  |
+|-------|---|----|------|-------|-----|-----|
+| n | 2 | 32 | 1024 | 32768 | ~1M | ~1B |
+| log2n | 1 | 5 | 10 | 15 | 20 | 30 |
+
+### Basic Sorting
+
+
+
