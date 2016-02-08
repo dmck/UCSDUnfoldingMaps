@@ -24,6 +24,15 @@
   - Abstract Classes: Implementation v. Interface
 - Week 4
   - Event-Driven Programming
+- Week 5
+  - Searching
+    - Linear Search
+    - Binary Search
+  - Basic Sorting
+    - Selection Sort
+    - Insertion Sort
+    - Java's Built-In Sort
+  - Comparable Interface
 
 ## Week 1
 
@@ -393,4 +402,92 @@ keyReleased()
 ```
 PApplet() implements both the MouseListener and KeyListener interfaces, which means that it implements and thus overrides the methods of the interface. In turn PApplet(), can be extended by MapWithButton() which adds other functions.
 
-...
+## Week 5
+
+### Searching
+
+#### Linear Search
+Steps through each item in array and checks if the item is what we're looking for. This can be done even if the data isn't sorted. Efficiency depends on where (and whether) the item is in the array.
+
+#### Binary Search
+This search starts in the middle and adjusts the range to eliminate the bad 50%. The data has to be sorted. Psuedocode:
+
+```
+//Binary Search
+initialize low=0; high = size - 1
+while low <= high
+    // mid = (high+lo)w /2 may cause overflow, so:
+    mid = ((high-low)/2)
+    if this is what we're looking for return
+    if what we're looking for is less then
+        high = mid -1
+    else low = mid +1
+return not found.
+```
+So to compare efficiency:
+
+|  |  |  |  |  |  |  |
+|-------|---|----|------|-------|-----|-----|
+| n | 2 | 32 | 1024 | 32768 | ~1M | ~1B |
+| log2n | 1 | 5 | 10 | 15 | 20 | 30 |
+
+### Basic Sorting
+Objects must be sorted by the trait which is being searched for('needle').
+
+#### Bubble Sort
+Not covered. https://en.wikipedia.org/wiki/Bubble_sort
+
+#### Selection Sort
+
+> ... selection sort almost always outperforms bubble sort and gnome sort. - Wikipedia
+
+Selects the smallest and swaps it with the one at the front, until completed. https://en.wikipedia.org/wiki/Selection_sort
+
+```
+public static void selectionSort( int[] vals) {
+    // Loop through every item in array
+    for (int i=0; i < vals.length-1; i++) {
+        // Assume we've found lowest
+        indexMin = i;
+        // Loop through remainder to see any are lower
+        for (int j=i+1; j < vals.length; j++) {
+            if (vals[j] < vals[indexMin]) {
+                indexMin = j;
+            }
+        }
+        // Once lowest is found, swap.
+        swap (vals, indexMin, i);
+    }
+}
+```
+#### Insertion Sort
+```
+public static void mysterySort (int[] vals) {
+    int currInd;
+    for (int pos=1; pos < vals.length ; pos++) {
+        currInd = pos;
+        while ( currInd > 0 && value[currInd] < vals[currInd-1] ) {
+            swap(vals, currInd, currInd-1);
+            currInd = currInd -1;
+        }
+    }
+}
+```
+#### Java's Built-In Sort
+The built-in sort uses an optimized Merge Sort. https://docs.oracle.com/javase/tutorial/collections/algorithms/
+
+### Comparable Interface
+Comparable allows us to sort non-integers.
+```
+public class Airport implements Comparable<Airport> {
+    public int compareTo (Airport other) {
+        // smaller.compareTo(bigger) = NEGATIVE
+        // sameSize.compareTo(other) = 0
+        // bigger.compareTo(smaller) = POSITIVE
+        
+        // Sort by City:
+        return (this.getCity()).compareTo(other.getCity());
+    }
+}
+```
+
