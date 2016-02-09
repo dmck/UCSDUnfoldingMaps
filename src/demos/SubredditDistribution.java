@@ -11,17 +11,16 @@ import java.util.ArrayList;
 
 import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.GeoJSONReader;
+import de.fhpotsdam.unfolding.geo.Location;
 
 import java.util.HashMap;
 
+import module5.CommonMarker;
 import de.fhpotsdam.unfolding.marker.Marker;
 
 /**
- * Visualizes life expectancy in different countries. 
+ * Visualizes which countries have their name in the the name of a subreddit. 
  * 
- * It loads the country shapes from a GeoJSON file via a data reader, and loads the population density values from
- * another CSV file (provided by the World Bank). The data value is encoded to transparency via a simplistic linear
- * mapping.
  */
 public class SubredditDistribution extends PApplet {
 
@@ -47,7 +46,23 @@ public class SubredditDistribution extends PApplet {
 		// Country markers are shaded according to life expectancy (only once)
 		shadeCountries();
 	}
-
+	
+	@Override
+	public void mouseClicked()
+	{
+		// TODO: Implement this method
+		// Hint: You probably want a helper method or two to keep this code
+		// from getting too long/disorganized
+		
+		for(Marker marker : countryMarkers) {		
+			Location markerLocation = marker.getLocation();
+			// checking if inside
+			if(marker.isInside(map, mouseX, mouseY)) {
+				System.out.println(marker);
+			}
+		}
+	}
+	
 	public void draw() {
 		// Draw map tiles and country markers
 		map.draw();
@@ -85,7 +100,7 @@ public class SubredditDistribution extends PApplet {
 			marker.setProperties(properties);
 			
 			// print the number of subreddits containing the country's name
-			System.out.println(numOfSubreddits+" - "+marker.getProperty("name").toString());
+			// System.out.println(numOfSubreddits+" - "+marker.getProperty("name").toString());
 			
 			// set country color
 			int colorLevel = numOfSubreddits * 64;
