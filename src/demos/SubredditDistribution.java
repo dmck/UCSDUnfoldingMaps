@@ -62,29 +62,37 @@ public class SubredditDistribution extends PApplet {
 		String[] lines = loadStrings("subreddits.csv");
 		println("there are " + lines.length + " lines");
 		
+		// init subreddit counter
 		int numOfSubreddits = 0;
 		for (Marker marker : countryMarkers) {
+			// init list of subreddits for this country
 			List<String> subreddits = new ArrayList<String>();
 			java.util.HashMap<String, Object> properties = marker.getProperties();
+			//for each subreddit
 			for (int i = 0 ; i < lines.length; i++) {
+				// get this marker's country name and remove spaces
 				String countryName = marker.getProperty("name").toString().replaceAll("\\s+","");
+				//if the country name is inside the subreddit name
 				if(lines[i].toLowerCase().contains(countryName.toLowerCase())) {
-					numOfSubreddits++;
 					// println(lines[i]);
+					// then increase count and add to list of subreddits
+					numOfSubreddits++;
 					subreddits.add(lines[i]);
 				}
 			}
+			// add list of subreddits to marker's properties
 			properties.put("subreddits", subreddits );
 			marker.setProperties(properties);
-			System.out.println(numOfSubreddits+" - "+marker.getProperty("name").toString());
-			//int brightness = numOfSubreddits * 50;
-			//
-			//marker.setColor(color(brightness,brightness,brightness));
 			
+			// print the number of subreddits containing the country's name
+			System.out.println(numOfSubreddits+" - "+marker.getProperty("name").toString());
+			
+			// set country color
 			int colorLevel = numOfSubreddits * 64;
 			if (colorLevel > 255) {colorLevel = 255;}
 			marker.setColor(color(255-colorLevel, 100, colorLevel));
 			
+			//reset count for next country
 			numOfSubreddits = 0;
 		}
 	}
