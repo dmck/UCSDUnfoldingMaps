@@ -58,7 +58,18 @@ public class SubredditDistribution extends PApplet {
 			Location markerLocation = marker.getLocation();
 			// checking if inside
 			if(marker.isInside(map, mouseX, mouseY)) {
-				System.out.println(marker);
+				System.out.println("======================================");
+		    	System.out.println(marker.getProperty("name"));
+		    	System.out.println("======================================");
+				List<String> subreddits = (List<String>) marker.getProperty("subreddits");
+			    if(subreddits.isEmpty()) {
+			    	System.out.println("None.");
+			    } else {
+					for(String subreddit : subreddits) {
+				    	System.out.println("/r/"+subreddit);
+				    }
+			    }
+				//System.out.println(List.toArray(marker.getProperty("numOfSubreddits")));
 			}
 		}
 	}
@@ -99,13 +110,18 @@ public class SubredditDistribution extends PApplet {
 			properties.put("subreddits", subreddits );
 			marker.setProperties(properties);
 			
-			// print the number of subreddits containing the country's name
-			// System.out.println(numOfSubreddits+" - "+marker.getProperty("name").toString());
+			
+			//for(String subreddit : subreddits) {
+	        //    System.out.println(marker.getProperty("name").toString()+" - "+subreddit);
+	        //}
+
 			
 			// set country color
 			int colorLevel = numOfSubreddits * 64;
 			if (colorLevel > 255) {colorLevel = 255;}
-			marker.setColor(color(255-colorLevel, 100, colorLevel));
+			if (numOfSubreddits > 0) {
+				marker.setColor(color(255-colorLevel, 100, colorLevel));
+			} else {marker.setColor(color(100,100,100));}
 			
 			//reset count for next country
 			numOfSubreddits = 0;
