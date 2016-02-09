@@ -21,6 +21,11 @@ import de.fhpotsdam.unfolding.marker.Marker;
 /**
  * Visualizes which countries have their name in the the name of a subreddit. 
  * 
+ * Thanks to /u/elasto for the list of 10,000 subreddits
+ * https://www.reddit.com/r/findareddit/comments/wnoc2/i_have_a_csv_file_of_the_top_10000_subreddits_for/
+ * 
+ * @author UC San Diego Intermediate Software Development MOOC team
+ * @author Daniel McKnight
  */
 public class SubredditDistribution extends PApplet {
 
@@ -34,10 +39,6 @@ public class SubredditDistribution extends PApplet {
 		map = new UnfoldingMap(this, 50, 50, 700, 500, new Google.GoogleMapProvider());
 		MapUtils.createDefaultEventDispatcher(this, map);
 
-		// Load lifeExpectancy data
-		lifeExpMap = loadLifeExpectancyFromCSV("LifeExpectancyWorldBankModule3.csv");
-		println("Loaded " + lifeExpMap.size() + " data entries");
-
 		// Load country polygons and adds them as markers
 		countries = GeoJSONReader.loadData(this, "countries.geo.json");
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
@@ -50,10 +51,6 @@ public class SubredditDistribution extends PApplet {
 	@Override
 	public void mouseClicked()
 	{
-		// TODO: Implement this method
-		// Hint: You probably want a helper method or two to keep this code
-		// from getting too long/disorganized
-		
 		for(Marker marker : countryMarkers) {		
 			Location markerLocation = marker.getLocation();
 			// checking if inside
@@ -69,7 +66,6 @@ public class SubredditDistribution extends PApplet {
 				    	System.out.println("/r/"+subreddit);
 				    }
 			    }
-				//System.out.println(List.toArray(marker.getProperty("numOfSubreddits")));
 			}
 		}
 	}
@@ -110,12 +106,6 @@ public class SubredditDistribution extends PApplet {
 			properties.put("subreddits", subreddits );
 			marker.setProperties(properties);
 			
-			
-			//for(String subreddit : subreddits) {
-	        //    System.out.println(marker.getProperty("name").toString()+" - "+subreddit);
-	        //}
-
-			
 			// set country color
 			int colorLevel = numOfSubreddits * 64;
 			if (colorLevel > 255) {colorLevel = 255;}
@@ -126,26 +116,6 @@ public class SubredditDistribution extends PApplet {
 			//reset count for next country
 			numOfSubreddits = 0;
 		}
-	}
-
-	//Helper method to load life expectancy data from file
-	private HashMap<String, Float> loadLifeExpectancyFromCSV(String fileName) {
-		HashMap<String, Float> lifeExpMap = new HashMap<String, Float>();
-
-		String[] rows = loadStrings(fileName);
-		for (String row : rows) {
-			// Reads country name and population density value from CSV row
-			// NOTE: Splitting on just a comma is not a great idea here, because
-			// the csv file might have commas in their entries, as this one does.  
-			// We do a smarter thing in ParseFeed, but for simplicity, 
-			// we just use a comma here, and ignore the fact that the first field is split.
-			String[] columns = row.split(",");
-			if (columns.length == 6 && !columns[5].equals("..")) {
-				lifeExpMap.put(columns[4], Float.parseFloat(columns[5]));
-			}
-		}
-
-		return lifeExpMap;
 	}
 
 }
