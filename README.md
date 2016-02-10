@@ -1,6 +1,7 @@
 # Notes from the Coursera course: Object Oriented Programming in Java
 
 **Index**
+- My Extension
 - Original README
 - Week 1
   - Public v. Private
@@ -34,7 +35,10 @@
     - Insertion Sort
     - Java's Built-In Sort
   - Comparable Interface
-- Project
+
+## Project / Extension
+
+![GIF of Extension in use.](https://github.com/dmck/UCSDUnfoldingMaps/blob/master/example.gif)
 
 ## Original README
 ```
@@ -533,6 +537,3 @@ public class Airport implements Comparable<Airport> {
     }
 }
 ```
-## Project / Extension
-
-![GIF of Extension in use.](https://github.com/dmck/UCSDUnfoldingMaps/extension.gif)
