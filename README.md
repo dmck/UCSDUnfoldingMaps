@@ -34,6 +34,7 @@
     - Insertion Sort
     - Java's Built-In Sort
   - Comparable Interface
+- Project
 
 ## Original README
 ```
@@ -532,4 +533,6 @@ public class Airport implements Comparable<Airport> {
     }
 }
 ```
+## Project / Extension
 
+![GIF of Extension in use.](https://github.com/dmck/UCSDUnfoldingMaps/extension.gif)
