@@ -35,8 +35,8 @@ public class SubredditDistribution extends PApplet {
 	List<Marker> countryMarkers;
 
 	public void setup() {
-		size(800, 600, OPENGL);
-		map = new UnfoldingMap(this, 50, 50, 700, 500, new Google.GoogleMapProvider());
+		size(700,768, OPENGL);
+		map = new UnfoldingMap(this, 0, 0, 700, 700);
 		MapUtils.createDefaultEventDispatcher(this, map);
 
 		// Load country polygons and adds them as markers
@@ -73,6 +73,12 @@ public class SubredditDistribution extends PApplet {
 	public void draw() {
 		// Draw map tiles and country markers
 		map.draw();
+		noStroke();
+		fill(200,200,200);
+		rect(0, 701, 700, 67);
+		fill(0,0,0);
+		textSize(32);
+		text("Subreddits of the World!", 165, 740);
 	}
 
 	//Helper method to color each country based on life expectancy
@@ -82,18 +88,19 @@ public class SubredditDistribution extends PApplet {
 		
 		// Load subreddit names
 		String[] lines = loadStrings("subreddits.csv");
-		println("there are " + lines.length + " lines");
+		println("Working with " + lines.length + " subreddits.");
 		
 		// init subreddit counter
 		int numOfSubreddits = 0;
 		for (Marker marker : countryMarkers) {
+			// get this marker's country name and remove spaces
+			String countryName = marker.getProperty("name").toString().replaceAll("\\s+","");
+			if (countryName.contains("merica")) {countryName = "merica";}
 			// init list of subreddits for this country
 			List<String> subreddits = new ArrayList<String>();
 			java.util.HashMap<String, Object> properties = marker.getProperties();
 			//for each subreddit
 			for (int i = 0 ; i < lines.length; i++) {
-				// get this marker's country name and remove spaces
-				String countryName = marker.getProperty("name").toString().replaceAll("\\s+","");
 				//if the country name is inside the subreddit name
 				if(lines[i].toLowerCase().contains(countryName.toLowerCase())) {
 					// println(lines[i]);
@@ -107,11 +114,11 @@ public class SubredditDistribution extends PApplet {
 			marker.setProperties(properties);
 			
 			// set country color
-			int colorLevel = numOfSubreddits * 64;
+			int colorLevel = (int) Math.round(Math.sqrt(numOfSubreddits) * 64);
 			if (colorLevel > 255) {colorLevel = 255;}
 			if (numOfSubreddits > 0) {
-				marker.setColor(color(255-colorLevel, 100, colorLevel));
-			} else {marker.setColor(color(100,100,100));}
+				marker.setColor(color(colorLevel,colorLevel,colorLevel));
+			} else {marker.setColor(color(32,32,32));}
 			
 			//reset count for next country
 			numOfSubreddits = 0;
