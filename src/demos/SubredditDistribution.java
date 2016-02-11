@@ -78,7 +78,14 @@ public class SubredditDistribution extends PApplet {
 		rect(0, 701, 700, 67);
 		fill(0,0,0);
 		textSize(32);
-		text("Subreddits of the World!", 165, 740);
+		text("Subreddits of the World!", 55, 745);
+		fill(255,255,255);
+		rect(500, 710, 15, 15);
+		fill(0,0,0);
+		rect(500, 740, 15, 15);
+		textSize(18);
+		text("Many Subreddits", 520, 725);
+		text("None.", 520, 755);
 	}
 
 	//Helper method to color each country based on life expectancy
